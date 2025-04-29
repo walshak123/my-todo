@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My todo-list</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .done {
+      text-decoration: underline;
+    }
+    button {
+      background-color: orange !important;
+      border: 3px solid black;
+    }
+    button:focus {
+      background-color: red !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="flex flex-col h-screen gap-y-4 w-full bg-gradient-to-r from-blue-900 to-fuchsia-800">
+    <h4 class="text-center text-[40px] text-white font-extrabold mt-12 font-serif">MY TODO LIST📝✏️</h4>
+    <div class="bg-red-50 flex rounded-md p-5 w-4/12 mx-auto">
+      <div class="flex w-full gap-x-4">
+        <input type="text"placeholder="Enter your todo"class="border-slate-400 border w-full p-2 placeholder-slate-300"/>
+        <button class="bg-blue-400 rounded-md text-white text-[20px] p-2 font-serif"onclick="addBtnFn()">Add</button>
+      </div>
+    </div>
+
+    <div>
+      <h4 class="text-center text-[30px] font-bold text-white font-serif">Extra Comment</h4>
+      
+    </div>
+
+    <div class="flex flex-col w-4/12 mx-auto p-5 bg-white rounded-md">
+      <h4 class="font-bold text-[30px] font-serif">My Todos </h4>
+      <div id="todos"></div>
+    </div>
+
+    <div class="flex w-4/12 mx-auto p-5 bg-white rounded-md">
+      <h4 class="font-bold text-[30px] font-serif">Extra comments📚💬</h4>
+      <div id="comments"></div>
+    </div>
+  </div>
+
+  <script>
+    let inputForm = document.querySelector("input");
+    const todos = document.querySelector("#todos");
+
+    inputForm.addEventListener("input", (e) => {
+      console.log(e.target);
+    });
+
+    function addBtnFn() {
+      let id = new Date().getTime();
+      let input = document.querySelector("input");
+
+      let todo = document.createElement("p");
+      todo.innerHTML = `
+        <input type="checkbox" class="select" onclick="toggleDone(${id})" id="${id}">
+        <span>${input.value}</span>
+        <button onclick="deleteTodo(${id})">Delete</button>.
+      `;
+
+      todos.appendChild(todo);
+      input.value = "";
+    }
+
+    function toggleDone(id) {
+      let checkbox = document.getElementById(id);
+      let item = checkbox.nextElementSibling;
+      item.classList.toggle("done");
+    }
+
+    function deleteTodo(id) {
+      let checkbox = document.getElementById(id);
+      let item = checkbox.parentElement;
+      item.remove();
+    }
+  </script>
+</body>
+</html>
